@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyecto_final_grupo1;
+package proyecto_final_grupo1; // Declaración del paquete del archivo
 
-import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;// Importación de la clase JOptionPane
 
-public class USUARIO extends javax.swing.JFrame {
+public class USUARIO extends javax.swing.JFrame {// Declaración de la clase USUARIO que extiende de javax.swing.JFrame
 
     /**
      * Creates new form USUARIO
      */
-    public USUARIO() {
-        initComponents();
-        setLocationRelativeTo(null);
+    public USUARIO() {// Constructor de la clase
+        initComponents();// Inicialización de los componentes de la interfaz gráfica
+        setLocationRelativeTo(null);// Establece la ubicación de la ventana en el centro de la pantalla
     }
 
     /**
@@ -117,18 +117,18 @@ public class USUARIO extends javax.swing.JFrame {
 
     private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
         // TODO add your handling code here:
-        String Usuario="lacteos";
-        String Contraseña="2509";
+        String Usuario="lacteos";// Usuario esperado
+        String Contraseña="2509";//Contraseña esperada
         
         String Pass=new String(Password.getPassword());
         
-        if(txtUsuario.getText().equals(Usuario)&& Pass.equals(Contraseña)){
-            MENU MN = new MENU();
-            MN.setVisible(true);
-            dispose();
+        if(txtUsuario.getText().equals(Usuario)&& Pass.equals(Contraseña)){// Verificar si el usuario y la contraseña coinciden
+            MENU MN = new MENU();// Crear una instancia de la clase MENU
+            MN.setVisible(true);// Mostrar la ventana MENU
+            dispose();// Cerrar la ventana actual (USUARIO)
         }
         else{
-            JOptionPane.showMessageDialog(this, "Usuario / contraseña incorrecta");
+            JOptionPane.showMessageDialog(this, "Usuario / contraseña incorrecta"); // Mostrar un mensaje emergente indicando que el usuario o la contraseña son incorrectos
             
         }
     }//GEN-LAST:event_btnEntrarMouseClicked
@@ -163,7 +163,7 @@ public class USUARIO extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new USUARIO().setVisible(true);
+                new USUARIO().setVisible(true);//Crear una instancia de la clase USUARIO y mostrar la ventana
             }
         });
     }

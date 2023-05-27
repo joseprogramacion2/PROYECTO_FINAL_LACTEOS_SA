@@ -2,16 +2,40 @@
 package proyecto_final_grupo1;
 
 
+import Conexion.conexion;// Importa la clase 'conexion' desde el paquete 'Conexion'
+import java.sql.SQLException;// Importa la clase 'SQLException' desde el paquete 'java.sql'
+import java.sql.*;// Importa todas las clases del paquete 'java.sql'
+import java.sql.Connection;// Importa la clase 'Connection' desde el paquete 'java.sql'
+import java.util.logging.Level;// Importa la clase 'Level' desde el paquete 'java.util.logging'
+import java.util.logging.Logger;// Importa la clase 'Logger' desde el paquete 'java.util.logging'
+import javax.swing.JOptionPane;// Importa la clase 'JOptionPane' desde el paquete 'javax.swing'
+import javax.swing.table.DefaultTableModel;// Importa la clase 'DefaultTableModel' desde el paquete 'javax.swing.table'
 
 public class ELIMINAR extends javax.swing.JFrame {
-
-    
+    conexion con = new conexion();// Crea una instancia de la clase 'conexion'
+    Connection cn = con.conectar();// Establece una conexión utilizando el método 'conectar' de la instancia 'con'
+    PreparedStatement ps;// Declaración de variable para preparar una sentencia SQL
+    ResultSet rs;// Declaración de variable para almacenar el resultado de una consulta
+   
+  
+    // Método para limpiar los campos de búsqueda
+    public void limpiar(){
+        txtbuscartodo.setText("");   
+    }
+  
+            
+    // Constructor de la clase ELIMINAR
     public ELIMINAR() {
-        initComponents();
-        setLocationRelativeTo(null);
+        initComponents();// Inicializa los componentes de la interfaz gráfica
+        setLocationRelativeTo(null);// Centra la ventana en la pantalla
+        Mostrar("");// Llama al método 'Mostrar' pasando una cadena vacía como parámetro para mostrar todos los registros en la tabla
          
     }
-
+    private void LimpiarCajas(){
+        txtbuscartodo.setText(null);// Limpia el contenido del campo de texto 'txtbuscartodo' estableciéndolo como nulo
+                
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,10 +156,10 @@ public class ELIMINAR extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.toBack();
-        setVisible(false);
-        new MENU().toFront();
-        new MENU().setState(java.awt.Frame.NORMAL);
+        this.toBack();// Envía la ventana actual al fondo, detrás de otras ventanas
+        setVisible(false);// Hace que la ventana actual no sea visible
+        new MENU().toFront();// Crea una nueva instancia de la clase 'MENU' y la coloca al frente, por encima de otras ventanas
+        new MENU().setState(java.awt.Frame.NORMAL);// Establece el estado de la nueva instancia de 'MENU' como normal
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void TablaAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_TablaAncestorMoved
@@ -143,11 +167,12 @@ public class ELIMINAR extends javax.swing.JFrame {
     }//GEN-LAST:event_TablaAncestorMoved
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-
+     Borrar();
     }//GEN-LAST:event_btneliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         
+     Buscar();
     }//GEN-LAST:event_buscarActionPerformed
 
     private void txtbuscartodoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscartodoKeyPressed
@@ -198,7 +223,98 @@ public class ELIMINAR extends javax.swing.JFrame {
     }
 
 
+public void Mostrar(String Tipo_Producto){
+    DefaultTableModel modelo=new DefaultTableModel();// Crea un nuevo modelo de tabla por defecto
+    modelo.addColumn("Tipo de Producto");// Agrega una columna al modelo con el encabezado "Tipo de Producto"
+    modelo.addColumn("Codigo de Producto");// Agrega una columna al modelo con el encabezado "Codigo de Producto"
+    modelo.addColumn("Cantidad");// Agrega una columna al modelo con el encabezado "Cantidad"
+    modelo.addColumn("Fecha de Ingreso");// Agrega una columna al modelo con el encabezado "Cantidad"
+    modelo.addColumn("Fecha de Vencimiento");// Agrega una columna al modelo con el encabezado "Fecha de Vencimiento"
+    Tabla.setModel(modelo);// Asigna el modelo de tabla al componente de la interfaz gráfica llamado 'Tabla'
+    String sql="";// Variable para almacenar la consulta SQL
+    if(Tipo_Producto.equals("")){// Verifica si el parámetro 'Tipo_Producto' está vacío
+        sql="Select*from lacteos";// Consulta para seleccionar todos los registros de la tabla 'lacteos'
+    }else{
+        sql="Select*from lacteos where Tipo_Producto like'%"+Tipo_Producto+"%'"; // Consulta para seleccionar los registros de la tabla 'lacteos' que coincidan con el tipo de producto especificado en 'Tipo_Producto'
+    }
+    String lacteos[]=new String[5];// Arreglo de cadenas para almacenar los datos de cada registro
+    Statement set;
+    try {
+        set = cn.createStatement(); // Crea un objeto Statement para ejecutar consultas SQL
+        ResultSet resul=set.executeQuery(sql);// Ejecuta la consulta SQL y obtiene el resultado en un objeto ResultSet
+        while(resul.next()){// Itera sobre los resultados del ResultSet
+            lacteos[0]=resul.getString(1);// Almacena el valor del primer campo en el arreglo lacteos en la posición 0
+              lacteos[1]=resul.getString(2);// Almacena el valor del primer campo en el arreglo lacteos en la posición 1
+                lacteos[2]=resul.getString(3);  // Almacena el valor del primer campo en el arreglo lacteos en la posición 2
+                   lacteos[3]=resul.getString(4);// Almacena el valor del primer campo en el arreglo lacteos en la posición 3
+                        lacteos[4]=resul.getString(5);// Almacena el valor del primer campo en el arreglo lacteos en la posición 4
+                            modelo.addRow(lacteos);// Agrega una nueva fila al modelo de tabla con los valores almacenados en el arreglo lacteos
+                  
+                
+        }
+        Tabla.setModel(modelo);
+    } catch (SQLException ex) {
+        // Manejo de excepciones de SQL
+        Logger.getLogger(ELIMINAR.class.getName()).log(Level.SEVERE, null, ex);
+    }
+   
+    
+}
+ 
+public void Borrar(){
+    int fila=Tabla.getSelectedRow();// Obtiene el índice de la fila seleccionada en la tabla
+    String Codigo_Producto=Tabla.getValueAt(fila,1).toString();// Obtiene el valor de la columna 'Codigo de Producto' de la fila seleccionada
+    int n=JOptionPane.showConfirmDialog(null,"Desea eliminar producto","ELIMINAR",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);// Muestra un cuadro de diálogo de confirmación para eliminar el producto
+    if(n==JOptionPane.YES_NO_OPTION){
+    try {
+        PreparedStatement borrar=cn.prepareStatement("Delete from lacteos where Codigo_Producto='"+Codigo_Producto+"'");// Prepara una sentencia SQL para eliminar el producto con el código especificado
+        borrar.executeUpdate();
+        Mostrar("");
+    } catch (SQLException ex) {
+        Logger.getLogger(ELIMINAR.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+}
+public void Buscar(){  
+      String campo = txtbuscartodo.getText();// Obtiene el texto ingresado en el campo de búsqueda
+        String where = "";// Variable para almacenar la condición de búsqueda
 
+        if(!"".equals(campo))// Verifica si el campo de búsqueda no está vacío
+        {
+            where = "WHERE Codigo_Producto = '"+ campo + "'"; // Define la condición de búsqueda para buscar registros con el código de producto especificado
+        }
+        try{
+            DefaultTableModel modelo=new DefaultTableModel();// Crea un nuevo modelo de tabla
+            Tabla.setModel(modelo);
+            String sql = "SELECT Tipo_Producto, Codigo_Producto, Cantidad, Fecha_de_Ingreso, Fecha_de_Vencimiento FROM lacteos " + where;
+
+            System.out.println(sql);// Imprime la consulta SQL en la consola
+
+            ps =cn.prepareStatement(sql); // Prepara una sentencia SQL utilizando la consulta construida anteriormente
+            rs =ps.executeQuery();// Ejecuta la consulta SQL y obtiene el resultado en un objeto ResultSet
+            ResultSetMetaData rsMd= rs.getMetaData();// Ejecuta la consulta SQL y obtiene el resultado en un objeto ResultSet
+            int cantidadColumnas =rsMd.getColumnCount(); // Obtiene la cantidad de columnas en el resultado de la consulta
+            modelo.addColumn("Tipo de Producto");// Agrega una columna al modelo con el encabezado "Tipo de Producto"
+            modelo.addColumn("Codigo de Producto");// Agrega una columna al modelo con el encabezado "Codigo de Producto"
+            modelo.addColumn("Cantidad"); // Agrega una columna al modelo con el encabezado "Cantidad"   
+            modelo.addColumn("Fecha de Ingreso"); // Agrega una columna al modelo con el encabezado "Fecha de Ingreso"
+            modelo.addColumn("Fecha de Vencimiento");// Agrega una columna al modelo con el encabezado "Fecha de Vencimiento"
+            while(rs.next()){
+                Object [] filas = new Object[cantidadColumnas];
+                for(int i = 0; i< cantidadColumnas; i++){
+                    filas [i]=rs.getObject(i+1);
+                }
+                modelo.addRow(filas);// Agrega una nueva fila al modelo de tabla con los valores almacenados en el arreglo filas
+                
+                
+            } 
+        LimpiarCajas();// Llama al método LimpiarCajas para limpiar las cajas de texto u otros elementos
+        }catch(SQLException ex){
+       
+            System.err.println(ex.toString());  // Imprime el mensaje de error en la consola de error
+    }        
+       
+ }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTable Tabla;

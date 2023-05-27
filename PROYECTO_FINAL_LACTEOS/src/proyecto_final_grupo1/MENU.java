@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyecto_final_grupo1;
+package proyecto_final_grupo1;// Declaración del paquete del archivo
 
 
-public class MENU extends javax.swing.JFrame {
+public class MENU extends javax.swing.JFrame { // Declaración de la clase MENU que extiende de javax.swing.JFrame
 
     /**
      * Creates new form MENU
      */
-    public MENU() {
-        initComponents();
-        setLocationRelativeTo(null);
+    public MENU() {// Constructor de la clase
+        initComponents();// Inicialización de los componentes de la interfaz gráfica
+        setLocationRelativeTo(null);// Establece la ubicación de la ventana en el centro de la pantalla
     }
 
     /**
@@ -96,26 +96,26 @@ public class MENU extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.toBack();
-        INGRESAR ing=new INGRESAR ();
-        ing.setVisible(true);
-        ing.toFront();
+        this.toBack();// Envía la ventana actual hacia atrás (oculta la ventana actual)
+        INGRESAR ing=new INGRESAR ();// Crea una instancia de la clase INGRESAR
+        ing.setVisible(true);// Hace visible la ventana de INGRESAR
+        ing.toFront();// Coloca la ventana de INGRESAR al frente (sobre la ventana actual)
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.toBack();
-        ELIMINAR eli=new ELIMINAR ();
-        eli.setVisible(true);
-        eli.toFront();
+        this.toBack();// Envía la ventana actual hacia atrás (oculta la ventana actual)
+        ELIMINAR eli=new ELIMINAR ();//Crea una instancia de la clase ELIMINAR
+        eli.setVisible(true);// Hace visible la ventana de ELIMINAR
+        eli.toFront();// Coloca la ventana de ELIMINAR al frente (sobre la ventana actual)
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        this.toBack();
-        LISTA lis=new LISTA ();
-        lis.setVisible(true);
-        lis.toFront();
+        this.toBack();// Envía la ventana actual hacia atrás (oculta la ventana actual)
+        LISTA lis=new LISTA ();// Hace visible la ventana de LISTA
+        lis.setVisible(true);// Hace visible la ventana de LISTA
+        lis.toFront();// Coloca la ventana de ELIMINAR al frente (sobre la ventana actual)
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

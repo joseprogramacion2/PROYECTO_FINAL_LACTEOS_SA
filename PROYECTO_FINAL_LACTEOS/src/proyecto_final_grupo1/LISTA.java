@@ -1,17 +1,32 @@
 
-package proyecto_final_grupo1;
+package proyecto_final_grupo1;// Declaración del paquete del archivo
 
+import Conexion.conexion; // Importar la clase 'conexion' desde el paquete 'Conexion'
+import java.sql.ResultSetMetaData;// Importar la clase 'ResultSetMetaData' del paquete 'java.sql'
+import java.sql.SQLException;// Importar la clase 'SQLException' del paquete 'java.sql'
+import java.sql.*;// Importar todas las clases del paquete 'java.sql'
+import java.sql.Connection; // Importar la clase 'Connection' del paquete 'java.sql'
+import javax.swing.table.DefaultTableModel;// Importar la clase 'DefaultTableModel' del paquete 'javax.swing.table'
 
-public class LISTA extends javax.swing.JFrame {
-
+public class LISTA extends javax.swing.JFrame { // Declaración de la clase LISTA que extiende de javax.swing.JFrame
+    conexion con= new conexion();// Crear una instancia de la clase 'conexion'
+    Connection cn = con.conectar();// Establecer una conexión utilizando el método 'conectar' de la instancia 'con'
+    PreparedStatement ps; // Declarar una variable 'ps' para preparar una sentencia SQL
+    ResultSet rs; // Declarar una variable 'rs' para almacenar el resultado de una consulta
     /**
      * Creates new form LISTA
      */
-    public LISTA() {
-        initComponents();
-        setLocationRelativeTo(null);
+    public LISTA() {// Constructor de la clase
+        initComponents();// Inicialización de los componentes de la interfaz gráfica
+        setLocationRelativeTo(null);// Establece la ubicación de la ventana en el centro de la pantalla
     }
-
+    
+     private void LimpiarCajas(){
+        txtCampos.setText(null);// Limpiar el contenido del campo de texto 'txtCampos'
+        txtCampo.setText(null);
+        
+                
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -20,9 +35,9 @@ public class LISTA extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCampos = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCampo = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -52,24 +67,24 @@ public class LISTA extends javax.swing.JFrame {
         jLabel3.setText("Tipo de Producto:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCampos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField1KeyPressed(evt);
+                txtCamposKeyPressed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 170, -1));
+        jPanel1.add(txtCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 170, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Codigo de Producto:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, -1, -1));
 
-        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCampo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField2KeyTyped(evt);
+                txtCampoKeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 140, -1));
+        jPanel1.add(txtCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 140, -1));
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton2.setText("CONSULTAR");
@@ -141,10 +156,10 @@ public class LISTA extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.toBack();
-        setVisible(false);
-        new MENU().toFront();
-        new MENU().setState(java.awt.Frame.NORMAL);
+        this.toBack();// Envía la ventana actual al fondo (oculta la ventana)
+        setVisible(false); // Oculta la ventana actual
+        new MENU().toFront();// Crea una nueva instancia de la clase 'MENU' y la coloca al frente (en primer plano)
+        new MENU().setState(java.awt.Frame.NORMAL);// Establece el estado de la nueva instancia de 'MENU' como normal
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tablaAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaAncestorMoved
@@ -153,16 +168,16 @@ public class LISTA extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-
+    Consultar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+    private void txtCamposKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCamposKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1KeyPressed
+    }//GEN-LAST:event_txtCamposKeyPressed
 
-    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+    private void txtCampoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCampoKeyTyped
   
-    }//GEN-LAST:event_jTextField2KeyTyped
+    }//GEN-LAST:event_txtCampoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -194,11 +209,52 @@ public class LISTA extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LISTA().setVisible(true);
+                new LISTA().setVisible(true);// Crea una nueva instancia de la clase 'LISTA' y la muestra
+    
             }
         });
     }
+public void Consultar(){
+        String campo = txtCampo.getText(); // Obtener el texto ingresado en el campo 'txtCampo'
+        String campo2 = txtCampos.getText();// Obtener el texto ingresado en el campo 'txtCampos'
+        String where = ""; // Variable para almacenar la cláusula WHERE de la consulta
 
+        if(!"".equals(campo))
+        {
+            where = "WHERE Codigo_Producto = '"+ campo + "'";// Si el campo 'campo' no está vacío, construir la cláusula WHERE para buscar por código de producto
+        }
+        if(!"".equals(campo2))
+        {
+            where = "WHERE Tipo_Producto = '"+ campo2 + "'"; // Si el campo 'campo2' no está vacío, construir la cláusula WHERE para buscar por tipo de producto
+        }
+        try{
+            DefaultTableModel modelo=new DefaultTableModel();// Crear un nuevo modelo de tabla por defecto
+            tabla.setModel(modelo);
+            String sql = "SELECT Tipo_Producto, Codigo_Producto, Cantidad,Fecha_de_Ingreso, Fecha_de_Vencimiento FROM lacteos " + where;// Construir la consulta SQL
+
+            System.out.println(sql); // Imprimir la consulta SQL en la consola
+
+            ps =cn.prepareStatement(sql); // Preparar la consulta SQL utilizando la conexión 'cn'
+            rs =ps.executeQuery();// Ejecutar la consulta y obtener los resultados en el objeto 'rs'
+            ResultSetMetaData rsMd= rs.getMetaData();// Obtener los metadatos del resultado de la consulta
+            int cantidadColumnas =rsMd.getColumnCount(); // Obtener la cantidad de columnas en el resultado
+            modelo.addColumn("Tipo de Producto");// Agregar una columna al modelo de tabla con el nombre "Tipo de Producto"
+            modelo.addColumn("Codigo de Producto");// Agregar una columna al modelo de tabla con el nombre "Codigo de Producto"
+            modelo.addColumn("Cantidad"); // Agregar una columna al modelo de tabla con el nombre "Cantidad"
+            modelo.addColumn("Fecha de Ingreso");// Agregar una columna al modelo de tabla con el nombre "Fecha de Ingreso"
+            modelo.addColumn("Fecha de Vencimiento");// Agregar una columna al modelo de tabla con el nombre "Fecha de Vencimiento"
+            while(rs.next()){
+                Object [] filas = new Object[cantidadColumnas];
+                for(int i = 0; i< cantidadColumnas; i++){
+                    filas [i]=rs.getObject(i+1);
+                }
+                modelo.addRow(filas); // Agregar una fila al modelo de tabla con los valores obtenidos del resultado de la consulta
+            }
+        LimpiarCajas();// Llamar al método 'LimpiarCajas()' para limpiar los campos de texto
+        }catch(SQLException ex){
+            System.err.println(ex.toString());// Imprimir el mensaje de error en la consola
+
+        }}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -209,8 +265,8 @@ public class LISTA extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tabla;
+    private javax.swing.JTextField txtCampo;
+    private javax.swing.JTextField txtCampos;
     // End of variables declaration//GEN-END:variables
 }

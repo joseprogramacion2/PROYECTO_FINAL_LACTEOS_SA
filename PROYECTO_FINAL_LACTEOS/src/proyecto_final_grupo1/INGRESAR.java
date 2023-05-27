@@ -2,19 +2,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyecto_final_grupo1;
+package proyecto_final_grupo1;// Declaración del paquete del archivo
 
-public class INGRESAR extends javax.swing.JFrame {
+import Conexion.conexion;// Importar la clase 'conexion' desde el paquete 'Conexion'
+import java.awt.Color;
+import java.sql.Connection; // Importar la clase 'Connection' del paquete 'java.sql'
+import java.sql.*;// Importar todas las clases del paquete 'java.sql'
+import javax.swing.JOptionPane;// Importar la clase 'JOptionPane' del paquete 'javax.swing'
+import java.util.logging.*;// Importar las clases relacionadas con el registro de eventos
 
+public class INGRESAR extends javax.swing.JFrame {// Declaración de la clase INGRESAR que extiende de javax.swing.JFrame
+
+    conexion con = new conexion(); // Crear una instancia de la clase 'conexion'
+    Connection cn = con.conectar(); // Establecer una conexión utilizando el método 'conectar' de la instancia 'con'
+    PreparedStatement ps;// Declarar una variable 'ps' para preparar una sentencia SQL
+    ResultSet rs;   // Declarar una variable 'rs' para almacenar el resultado de una consulta  
     /**
      * Creates new form INGRESAR
      */
-    public INGRESAR() {
-        initComponents();
-        setLocationRelativeTo(null);
+    public INGRESAR() {// Constructor de la clase
+        initComponents();// Inicialización de los componentes de la interfaz gráfica
+        setLocationRelativeTo(null);// Establece la ubicación de la ventana en el centro de la pantalla
         
     }
-
+    private void LimpiarCajas(){
+        tipo.setSelectedIndex(0);// Establecer el índice seleccionado en el elemento 0 del combo box 'tipo'
+        txtcantidad.setText(null); // Limpiar el contenido del campo de texto 'txtcantidad'
+        txtingreso.setText(null); // Limpiar el contenido del campo de texto 'txtingreso'
+        txtvencimiento.setText(null);// Limpiar el contenido del campo de texto 'txtvencimiento'
+                
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,18 +45,19 @@ public class INGRESAR extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        tipo = new javax.swing.JComboBox<>();
+        txtcantidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtingreso = new javax.swing.JTextField();
+        txtvencimiento = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtproducto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,11 +76,6 @@ public class INGRESAR extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Codigo Producto:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 140, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -83,26 +96,22 @@ public class INGRESAR extends javax.swing.JFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, -1, -1));
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccionar:", "Leche", "Queso", "Crema", "Mantequilla", "Yogurt" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 190, -1));
+        tipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccionar:", "Leche", "Queso", "Crema", "Mantequilla", "Yogurt" }));
+        jPanel2.add(tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 190, -1));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtcantidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtcantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtcantidadActionPerformed(evt);
             }
         });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtcantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                txtcantidadKeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 190, -1));
-
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccionar:", "L", "Q", "C", "M", "Y" }));
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 190, -1));
+        jPanel2.add(txtcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 190, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -114,26 +123,49 @@ public class INGRESAR extends javax.swing.JFrame {
         jLabel8.setText("Fecha de Ingreso:");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtingreso.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtingreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtingresoActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 190, -1));
+        jPanel2.add(txtingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 190, -1));
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtvencimiento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtvencimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtvencimientoActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 190, -1));
+        jPanel2.add(txtvencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 190, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Codigo de Producto:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+
+        txtproducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtproducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtproductoActionPerformed(evt);
+            }
+        });
+        txtproducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtproductoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 190, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pngtree-health-and-vitality-milk-dairy-products-poster-background-material-image_126084.jpg"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -60, 590, 520));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Tipo de Producto:");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 150, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,31 +183,43 @@ public class INGRESAR extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.toBack();
-        setVisible(false);
-        new MENU().toFront();
-        new MENU().setState(java.awt.Frame.NORMAL);
+        this.toBack();// Coloca la ventana actual en la parte posterior (oculta la ventana)
+        setVisible(false);// Establece la visibilidad de la ventana actual como falsa (oculta la ventana)
+        new MENU().toFront();// Crea una nueva instancia de la clase MENU y la coloca en el frente (hace visible la ventana MENU)
+        new MENU().setState(java.awt.Frame.NORMAL);// Establece el estado de la ventana MENU como normal
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        Guardar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void txtcantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcantidadKeyTyped
 
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_txtcantidadKeyTyped
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtcantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcantidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtcantidadActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtingresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtingresoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtingresoActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtvencimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtvencimientoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtvencimientoActionPerformed
+
+    private void txtproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtproductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtproductoActionPerformed
+
+    private void txtproductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtproductoKeyTyped
+        // TODO add your handling code here:
+        //estas lineas de codigo sirven para poder hacer que el textfield de codigo de producto no se pueda ingresar nada ya que es auto incrementable
+        txtproducto.setEditable(false);
+        txtproducto.setEnabled(false);
+        txtproducto.setFocusable(false);
+    }//GEN-LAST:event_txtproductoKeyTyped
    
     /**
      * @param args the command line arguments
@@ -209,22 +253,38 @@ public class INGRESAR extends javax.swing.JFrame {
             new INGRESAR().setVisible(true);
         });
     }
-
+public void Guardar(){
+    
+    try{
+        // Preparar la sentencia SQL para insertar registros en la tabla 'lacteos'
+        PreparedStatement pps= cn.prepareStatement("INSERT INTO lacteos(Tipo_Producto,Cantidad,Fecha_de_Ingreso,Fecha_de_Vencimiento) VALUES(?,?,?,?)");
+         // Establecer los valores de los parámetros en la sentencia SQL
+        pps.setString(1, (String) tipo.getSelectedItem());// Tipo de Producto
+        pps.setString(2, txtcantidad.getText());// Cantidad
+        pps.setString(3, txtingreso.getText());// Fecha de Ingreso
+        pps.setString(4, txtvencimiento.getText()); // Fecha de Vencimiento
+        pps.executeUpdate();// Ejecutar la sentencia SQL para insertar el registro en la tabla 'lacteos'
+        JOptionPane.showMessageDialog(null, "Producto Registrado");// Mostrar un mensaje de éxito
+        LimpiarCajas();// Llamar al método 'LimpiarCajas()' para limpiar los campos de texto
+        }catch(SQLException ex) {
+            Logger.getLogger(INGRESAR.class.getName()).log(Level.SEVERE, null, ex);// Registrar y mostrar el mensaje de error en el registro de eventos
+        }}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JComboBox<String> tipo;
+    private javax.swing.JTextField txtcantidad;
+    private javax.swing.JTextField txtingreso;
+    javax.swing.JTextField txtproducto;
+    private javax.swing.JTextField txtvencimiento;
     // End of variables declaration//GEN-END:variables
 }
