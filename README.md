@@ -19,7 +19,7 @@ Este proyecto es presentado como fase final de la etapa de aprendizaje del curso
 ### Si elegimos entrar a la función “REGISTRAR PRODUCTO
 - Visualizaremos 5 campos donde 3 los ingresara manualmente el usuario y 2 son de elección.
 - En el primer campo, se debe seleccionar entre las  opciones de producto, ya sea este, “leche” , “queso“, “crema”, “mantequilla” y “Yogurt”.
-- En el segundo campo, se debe seleccionar el código de producto, ya sea este “L”, “Q”, “C”, “M” y “Y”
+- En el segundo campo, no se debera ingresar nada ya que el codigo de producto es auto incrementable.
 - En el tercer campo se debe colocar la cantidad de producto total que se desea agregar al inventario.
 - En el cuarto campo, se debe colocar la fecha de ingreso del producto.
 - En el quinto campo, se debe colocar la fecha en la que vence dicho producto.
